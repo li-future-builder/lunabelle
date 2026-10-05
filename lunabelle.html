@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunabelle ♡ your little peaceful corner</title>
+<meta name="description" content="A dreamy, feminine meditation sanctuary. Private by design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────── LUNABELLE DESIGN TOKENS ─────────────────────────── */
+:root{
+  --blush:#FDEEF4; --baby:#FCE4EE; --rose:#F6CFDD; --powder:#F9E6F0;
+  --lavender:#EAE4F6; --lilac:#D9CCEE; --cream:#FFF9F4; --warmwhite:#FFFCFA;
+  --champagne:#E9D8B8; --dustyrose:#D9A7B8; --mauve:#A9809C; --deep:#6E4A63;
+  --ink:#5C4453; --ink-soft:#8A6E80;
+  --sleep-bg:#3A2F47; --sleep-bg2:#2C2438; --sleep-ink:#EDE4F2;
+  --card:rgba(255,255,255,.62); --card-border:rgba(255,255,255,.8);
+  --shadow:0 10px 34px rgba(169,128,156,.18);
+  --shadow-soft:0 4px 18px rgba(169,128,156,.14);
+  --radius:26px; --radius-sm:18px;
+  --serif:'Cormorant Garamond',serif; --sans:'Jost',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--warmwhite);
+  min-height:100vh; overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(246,207,221,.55), transparent 42%),
+    radial-gradient(circle at 88% 18%, rgba(217,204,238,.5), transparent 45%),
+    radial-gradient(circle at 50% 110%, rgba(233,216,184,.35), transparent 55%);
+  background-attachment:fixed;
+}
+body.sleep-mode{
+  background:linear-gradient(180deg,var(--sleep-bg),var(--sleep-bg2));
+  background-image:
+    radial-gradient(circle at 80% 10%, rgba(217,204,238,.14), transparent 40%),
+    radial-gradient(circle at 15% 90%, rgba(233,216,184,.08), transparent 50%);
+  color:var(--sleep-ink);
+}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;letter-spacing:.01em}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2px solid var(--dustyrose); outline-offset:3px; border-radius:8px;
+}
+::selection{background:var(--rose)}
+/* dreamy grain */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:120; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+/* floating sparkles */
+.sparkle{position:fixed;pointer-events:none;z-index:1;opacity:.5;animation:floaty 9s ease-in-out infinite;font-size:14px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(12deg)}}
+
+/* ─────────────────────────── LAYOUT ─────────────────────────── */
+header.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;position:sticky;top:0;z-index:50;
+  background:rgba(255,252,250,.7);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(246,207,221,.5);
+}
+body.sleep-mode header.topbar{background:rgba(58,47,71,.7);border-color:rgba(217,204,238,.15)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:26px;color:var(--deep)}
+.logo .moon{font-size:24px;filter:drop-shadow(0 0 8px rgba(233,216,184,.8))}
+.top-actions{display:flex;gap:10px;align-items:center}
+.icon-btn{
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:17px;
+  background:var(--card);border:1px solid var(--card-border);box-shadow:var(--shadow-soft);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.icon-btn:hover{transform:translateY(-2px) scale(1.06);box-shadow:var(--shadow)}
+.icon-btn.active{background:var(--rose)}
+main{max-width:1060px;margin:0 auto;padding:26px 20px 110px}
+.view{display:none;animation:fadeUp .5s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+nav.bottom-nav{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;
+  display:flex;gap:4px;padding:8px 12px;border-radius:40px;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);box-shadow:var(--shadow);
+}
+body.sleep-mode nav.bottom-nav{background:rgba(44,36,56,.8);border-color:rgba(217,204,238,.18)}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;min-width:64px;
+  padding:8px 12px;border-radius:24px;font-size:11px;letter-spacing:.04em;color:var(--ink-soft);
+  transition:all .25s ease;
+}
+.nav-item .ic{font-size:19px;transition:transform .25s ease}
+.nav-item:hover .ic{transform:scale(1.2)}
+.nav-item.active{background:linear-gradient(135deg,var(--rose),var(--lilac));color:var(--deep);box-shadow:var(--shadow-soft)}
+
+/* ─────────────────────────── CARDS & COMPONENTS ─────────────────────────── */
+.card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+  box-shadow:var(--shadow-soft);padding:22px;backdrop-filter:blur(10px);
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.greeting{font-size:34px;color:var(--deep)}
+.greeting .sub{font-family:var(--sans);font-size:14px;color:var(--ink-soft);margin-top:6px;letter-spacing:.06em}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:40px;
+  font-size:15px;letter-spacing:.08em;font-weight:500;color:var(--warmwhite);
+  background:linear-gradient(135deg,var(--dustyrose),var(--mauve));
+  box-shadow:0 8px 24px rgba(169,128,156,.4);transition:all .3s ease;
+}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 32px rgba(169,128,156,.5)}
+.btn-primary:active{transform:scale(.98)}
+.btn-ghost{
+  padding:11px 22px;border-radius:30px;font-size:13px;letter-spacing:.05em;
+  background:var(--card);border:1px solid var(--card-border);box-shadow:var(--shadow-soft);
+  transition:all .25s ease;
+}
+.btn-ghost:hover{transform:translateY(-2px)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.chip{
+  padding:8px 16px;border-radius:24px;font-size:13px;background:var(--card);
+  border:1px solid var(--card-border);transition:all .25s ease;white-space:nowrap;
+}
+.chip:hover{transform:translateY(-2px)}
+.chip.active{background:linear-gradient(135deg,var(--rose),var(--lilac));color:var(--deep);font-weight:500}
+.chips-row{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 12px;scrollbar-width:none}
+.chips-row::-webkit-scrollbar{display:none}
+.tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mauve)}
+.section-title{font-size:24px;color:var(--deep);margin:26px 0 14px;display:flex;align-items:center;gap:8px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--rose),transparent);margin:20px 0;border:none}
+
+/* meditation cards */
+.med-card{overflow:hidden;display:flex;flex-direction:column;cursor:pointer}
+.med-scene{height:120px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;position:relative;display:grid;place-items:center;font-size:34px}
+.med-scene .play-badge{
+  width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:16px;
+  background:rgba(255,255,255,.8);backdrop-filter:blur(6px);box-shadow:var(--shadow-soft);
+  transition:transform .3s ease;
+}
+.med-card:hover .play-badge{transform:scale(1.15)}
+.med-body{padding:16px 18px 18px}
+.med-body h3{font-size:20px;color:var(--deep)}
+.med-meta{display:flex;gap:10px;align-items:center;margin-top:6px;font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+.pill{padding:3px 10px;border-radius:20px;background:var(--baby);font-size:11px;letter-spacing:.04em}
+.fav-btn{font-size:16px;padding:4px 8px;border-radius:10px;transition:transform .2s}
+.fav-btn:hover{transform:scale(1.3)}
+.fav-btn.faved{color:#E2556B}
+
+/* scenes */
+.scene-moon{background:linear-gradient(160deg,#3A2F52,#6E5A8E 60%,#B8A6D4)}
+.scene-clouds{background:linear-gradient(160deg,#FBE0EA,#F6CFDD 55%,#EAE4F6)}
+.scene-garden{background:linear-gradient(160deg,#FCE9F1,#F6D9E4 50%,#E7D8F0)}
+.scene-ocean{background:linear-gradient(160deg,#BFD8E8,#D9E6F2 55%,#F6CFDD)}
+.scene-galaxy{background:linear-gradient(160deg,#241E38,#4A3B66 55%,#8E7BB5)}
+.scene-candle{background:linear-gradient(160deg,#F3E2CE,#EAD3B8 55%,#D9A7B8)}
+.scene-rain{background:linear-gradient(160deg,#C9C3D9,#B8B2CC 55%,#D9CCEE)}
+.scene-dawn{background:linear-gradient(160deg,#FAD9E2,#F9E2C8 55%,#EAE4F6)}
+.scene .emoji{filter:drop-shadow(0 4px 10px rgba(0,0,0,.12))}
+
+/* player */
+.player-shell{max-width:560px;margin:0 auto;text-align:center}
+.player-scene{
+  height:230px;border-radius:var(--radius);position:relative;overflow:hidden;
+  display:grid;place-items:center;font-size:64px;box-shadow:var(--shadow);
+}
+.player-scene .calm-overlay{
+  position:absolute;inset:0;background:rgba(255,249,244,.0);transition:background 1.5s ease;
+}
+.playing .player-scene .calm-overlay{background:rgba(255,249,244,.28)}
+.big-play{
+  position:absolute;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:24px;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(8px);box-shadow:var(--shadow);
+  transition:transform .3s ease;z-index:2;
+}
+.big-play:hover{transform:scale(1.1)}
+.progress-track{height:8px;border-radius:8px;background:var(--baby);overflow:hidden;margin:22px 0 8px}
+.progress-fill{height:100%;width:0%;border-radius:8px;background:linear-gradient(90deg,var(--dustyrose),var(--mauve));transition:width .5s linear}
+.time-row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);letter-spacing:.05em}
+.slider-row{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:13px;color:var(--ink-soft)}
+input[type=range]{flex:1;accent-color:var(--dustyrose);height:4px}
+.scene-picker{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.scene-dot{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.8);box-shadow:var(--shadow-soft);transition:transform .25s;font-size:16px;display:grid;place-items:center}
+.scene-dot:hover{transform:scale(1.15)}
+.scene-dot.active{transform:scale(1.2);border-color:var(--deep)}
+
+/* mantras / affirmations */
+.mantra-card{text-align:center;padding:36px 26px;position:relative;overflow:hidden}
+.mantra-text{font-family:var(--serif);font-size:26px;font-style:italic;color:var(--deep);line-height:1.4}
+.reveal-anim{animation:revealGlow 1.4s ease}
+@keyframes revealGlow{0%{opacity:0;transform:scale(.92);filter:blur(6px)}60%{filter:blur(0)}100%{opacity:1;transform:none}}
+.quote-mark{font-size:54px;color:var(--rose);line-height:.5;font-family:var(--serif)}
+
+/* breathing */
+.breath-stage{display:grid;place-items:center;padding:30px 0 10px}
+.breath-circle{
+  width:190px;height:190px;border-radius:50%;display:grid;place-items:center;position:relative;
+  background:radial-gradient(circle at 35% 30%,#FFF,#F6CFDD 55%,#D9CCEE);
+  box-shadow:0 0 60px rgba(246,207,221,.65), inset 0 0 40px rgba(255,255,255,.7);
+  transition:transform 4s cubic-bezier(.4,0,.4,1);font-family:var(--serif);font-size:20px;color:var(--deep);
+}
+.breath-circle::before,.breath-circle::after{
+  content:"✿";position:absolute;font-size:18px;color:var(--dustyrose);opacity:.7;
+}
+.breath-circle::before{top:-6px;left:22px}
+.breath-circle::after{bottom:-4px;right:24px}
+.breath-label{margin-top:18px;font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--mauve)}
+.breath-count{font-size:13px;color:var(--ink-soft);margin-top:6px;letter-spacing:.1em}
+
+/* mood */
+.mood-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mood-btn{font-size:30px;padding:10px 14px;border-radius:20px;background:var(--card);border:1px solid var(--card-border);box-shadow:var(--shadow-soft);transition:all .25s ease}
+.mood-btn:hover{transform:translateY(-4px) scale(1.12)}
+.mood-btn.picked{background:linear-gradient(135deg,var(--rose),var(--lilac));transform:scale(1.12)}
+
+/* journal */
+.journal-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+textarea,input[type=text]{
+  width:100%;border-radius:var(--radius-sm);border:1px solid var(--card-border);
+  background:rgba(255,255,255,.75);padding:14px 16px;font-family:var(--sans);font-size:14px;color:var(--ink);
+  resize:vertical;min-height:110px;
+}
+textarea:focus,input[type=text]:focus{outline:2px solid var(--dustyrose);outline-offset:1px}
+.entry{border-left:3px solid var(--rose);padding:12px 16px;margin-top:12px;background:rgba(255,255,255,.5);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.entry .e-date{font-size:11px;letter-spacing:.1em;color:var(--mauve);text-transform:uppercase}
+.entry .e-prompt{font-family:var(--serif);font-style:italic;color:var(--deep);font-size:16px;margin:2px 0 4px}
+.entry .e-text{font-size:14px;line-height:1.6;white-space:pre-wrap}
+.privacy-note{font-size:12px;color:var(--ink-soft);display:flex;gap:8px;align-items:flex-start;margin-top:14px;line-height:1.5}
+
+/* progress */
+.stat-big{font-family:var(--serif);font-size:42px;color:var(--deep)}
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:110px;padding-top:10px}
+.bar{flex:1;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--dustyrose),var(--rose));min-height:4px;position:relative;transition:height .8s ease}
+.bar .bar-day{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:10px;color:var(--ink-soft);letter-spacing:.05em}
+.soft-msg{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--mauve);margin-top:10px}
+
+/* privacy center */
+.toggle{position:relative;width:48px;height:26px;border-radius:20px;background:var(--baby);transition:background .3s;flex-shrink:0}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18);transition:left .3s}
+.toggle.on{background:var(--dustyrose)}
+.toggle.on::after{left:25px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 4px;border-bottom:1px dashed rgba(217,167,184,.4)}
+.setting-row:last-child{border-bottom:none}
+.setting-row .s-label{font-size:14px;font-weight:500}
+.setting-row .s-desc{font-size:12px;color:var(--ink-soft);margin-top:2px;line-height:1.5}
+
+/* sleep timer pills */
+.timer-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+
+/* toast */
+#toast{
+  position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);z-index:200;
+  background:rgba(110,74,99,.94);color:#fff;padding:12px 24px;border-radius:30px;font-size:13px;
+  letter-spacing:.05em;opacity:0;pointer-events:none;transition:all .4s ease;box-shadow:var(--shadow);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important;scroll-behavior:auto !important}
+}
+body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation-duration:.001s !important;transition-duration:.001s !important}
+body.no-motion .breath-circle{transition:none !important}
+
+@media (max-width:640px){
+  .greeting{font-size:27px}
+  main{padding:20px 14px 120px}
+  .player-scene{height:190px}
+  .mantra-text{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="sparkle" style="top:14%;left:6%">✦</div>
+<div class="sparkle" style="top:60%;left:90%;animation-delay:2s">✧</div>
+<div class="sparkle" style="top:32%;left:94%;animation-delay:4s">✦</div>
+<div class="sparkle" style="top:78%;left:8%;animation-delay:1s">♡</div>
+
+<header class="topbar">
+  <div class="logo"><span class="moon">🌙</span> Lunabelle <span style="font-size:12px;font-family:var(--sans);color:var(--ink-soft);letter-spacing:.15em;margin-left:4px">EST. 2026</span></div>
+  <div class="top-actions">
+    <button class="icon-btn" id="sleepToggle" title="Sleep mode" aria-label="Toggle sleep mode" aria-pressed="false">🌙</button>
+    <button class="icon-btn" id="motionToggle" title="Reduce animations" aria-label="Toggle reduced motion" aria-pressed="false">✿</button>
+  </div>
+</header>
+
+<main>
+  <!-- ═══════════ HOME ═══════════ -->
+  <section class="view active" id="view-home" aria-label="Home">
+    <p class="tag">your little peaceful corner of the internet</p>
+    <h1 class="greeting" style="margin-top:8px"><span id="greetingName">Good evening</span> <span style="color:var(--dustyrose)">♡</span>
+      <div class="sub" id="dailyMsg">Take a little moment for yourself today.</div>
+    </h1>
+    <div style="display:flex;gap:14px;margin:22px 0;flex-wrap:wrap">
+      <button class="btn-primary" id="quickStart">✦ start meditation</button>
+      <button class="btn-ghost" onclick="showView('breathe')">🌬 breathing exercises</button>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <p class="tag">today's mantra</p>
+        <p class="mantra-text" style="font-size:21px;margin-top:10px" id="dailyMantra">“I am safe in this moment.”</p>
+        <button class="btn-ghost" style="margin-top:14px" onclick="showView('mantras')">all mantras →</button>
+      </div>
+      <div class="card">
+        <p class="tag">daily affirmation ✧</p>
+        <p class="mantra-text reveal-anim" style="font-size:21px;margin-top:10px" id="dailyAffirm"></p>
+        <button class="btn-ghost" style="margin-top:14px" onclick="newAffirmation()">another one ♡</button>
+      </div>
+    </div>
+    <h2 class="section-title">how are you feeling? <span style="font-size:16px">🌷</span></h2>
+    <div class="card">
+      <div class="mood-row" id="moodRow"></div>
+      <p class="soft-msg" id="moodMsg" style="text-align:center"></p>
+    </div>
+    <h2 class="section-title">continue your journey ✦</h2>
+    <div class="grid grid-2" id="continueRow"></div>
+    <h2 class="section-title">just for you ♡</h2>
+    <div class="grid grid-2" id="recoRow"></div>
+  </section>
+
+  <!-- ═══════════ MEDITATE ═══════════ -->
+  <section class="view" id="view-meditate" aria-label="Meditation library">
+    <h1 class="greeting" style="font-size:30px">the meditation library <span style="font-size:22px">🦢</span></h1>
+    <p class="sub" style="color:var(--ink-soft);font-size:14px;margin-top:6px">choose a soft place to land.</p>
+    <div class="chips-row" id="catChips" style="margin-top:18px"></div>
+    <div class="grid grid-2" id="medGrid"></div>
+  </section>
+
+  <!-- ═══════════ PLAYER ═══════════ -->
+  <section class="view" id="view-player" aria-label="Meditation player">
+    <button class="btn-ghost" onclick="showView('meditate')" style="margin-bottom:16px">← back to library</button>
+    <div class="player-shell" id="playerShell">
+      <div class="player-scene" id="playerScene">
+        <span class="emoji" id="sceneEmoji">🌙</span>
+        <div class="calm-overlay"></div>
+        <button class="big-play" id="bigPlay" aria-label="Play or pause">▶</button>
+      </div>
+      <h2 style="margin-top:20px;font-size:26px" id="playerTitle"></h2>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:4px" id="playerDesc"></p>
+      <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+      <div class="time-row"><span id="timeLeft">0:00</span><span id="timeTotal">0:00</span></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;align-items:center">
+        <button class="btn-ghost" id="prevBtn" aria-label="Previous meditation">⏮</button>
+        <button class="btn-ghost" id="favPlayerBtn" aria-label="Favorite">♡</button>
+        <button class="btn-ghost" id="nextBtn" aria-label="Next meditation">⏭</button>
+      </div>
+      <div class="slider-row"><span>✦ music</span><input type="range" id="volMusic" min="0" max="100" value="45" aria-label="Music volume"></div>
+      <div class="slider-row"><span>🌧 nature</span><input type="range" id="volNature" min="0" max="100" value="40" aria-label="Nature sounds volume"></div>
+      <div class="slider-row"><span>🎙 guide</span><input type="range" id="volVoice" min="0" max="100" value="70" aria-label="Voice volume"></div>
+      <label style="display:flex;gap:8px;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);margin-top:8px">
+        <input type="checkbox" id="guideToggle"> spoken guidance (soft voice)
+      </label>
+      <p class="tag" style="margin-top:18px">change your surroundings</p>
+      <div class="scene-picker" id="scenePicker"></div>
+      <p class="soft-msg" style="text-align:center;margin-top:22px">take a breath. you are safe here.<br>this moment is yours ♡</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ MANTRAS ═══════════ -->
+  <section class="view" id="view-mantras" aria-label="Mantras">
+    <h1 class="greeting" style="font-size:30px">mantras & affirmations <span style="font-size:22px">🎀</span></h1>
+    <div class="card mantra-card" style="margin-top:16px">
+      <span class="quote-mark">“</span>
+      <p class="mantra-text" id="mantraMain">I allow myself to slow down.</p>
+      <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-ghost" onclick="nextMantra(false)">✧ new mantra</button>
+        <button class="btn-ghost" id="favMantraBtn" onclick="toggleFavMantra()">♡ save</button>
+      </div>
+    </div>
+    <div class="chips-row" id="affChips" style="margin-top:22px"></div>
+    <div class="card mantra-card" style="margin-top:8px">
+      <span class="quote-mark" style="font-size:40px">✦</span>
+      <p class="mantra-text" style="font-size:22px" id="affMain"></p>
+      <button class="btn-ghost" style="margin-top:16px" onclick="nextAffirmation()">reveal another ♡</button>
+    </div>
+    <h2 class="section-title">saved ♡</h2>
+    <div class="grid grid-2" id="favMantrasList"></div>
+  </section>
+
+  <!-- ═══════════ BREATHE ═══════════ -->
+  <section class="view" id="view-breathe" aria-label="Breathing exercises">
+    <h1 class="greeting" style="font-size:30px">breathing exercises <span style="font-size:22px">🌬</span></h1>
+    <div class="chips-row" style="margin-top:16px" id="breathChips"></div>
+    <div class="card" style="margin-top:8px">
+      <div class="breath-stage">
+        <div class="breath-circle" id="breathCircle"><span id="breathPhase">ready?</span></div>
+      </div>
+      <p class="breath-label" id="breathName">box breathing · 4-4-4-4</p>
+      <p class="breath-count" id="breathCount">press begin when you're ready ♡</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:16px">
+        <button class="btn-primary" id="breathBtn" style="padding:12px 26px">begin</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ JOURNAL ═══════════ -->
+  <section class="view" id="view-journal" aria-label="Private journal">
+    <h1 class="greeting" style="font-size:30px">dear diary… <span style="font-size:22px">🕯</span></h1>
+    <p class="sub" style="color:var(--ink-soft);font-size:14px;margin-top:6px">a private space. only for you.</p>
+    <div class="card" style="margin-top:18px">
+      <div class="journal-prompts" id="journalPrompts"></div>
+      <textarea id="journalText" placeholder="pour your heart out, softly…" aria-label="Journal entry"></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn-primary" style="padding:12px 24px" onclick="saveEntry()">✦ keep this moment</button>
+      </div>
+      <p class="privacy-note">🔒 <span><strong>100% private.</strong> Your entries live only on this device. Nothing is sent anywhere, ever. No AI training, no ads, no analytics on your words. You can export or erase everything in the Privacy Center.</span></p>
+    </div>
+    <h2 class="section-title">your entries 🌙</h2>
+    <div id="entryList"></div>
+  </section>
+
+  <!-- ═══════════ PROFILE / PROGRESS / PRIVACY ═══════════ -->
+  <section class="view" id="view-profile" aria-label="Profile, progress and privacy">
+    <h1 class="greeting" style="font-size:30px">hello, beautiful <span style="font-size:22px">🪞</span></h1>
+    <div style="margin-top:16px;max-width:340px">
+      <label class="tag" for="nameInput">what should we call you?</label>
+      <input type="text" id="nameInput" placeholder="your name ♡" style="margin-top:6px" onchange="setName(this.value)">
+    </div>
+    <h2 class="section-title">your gentle progress ✦</h2>
+    <div class="grid grid-2">
+      <div class="card" style="text-align:center"><p class="tag">sessions</p><p class="stat-big" id="statSessions">0</p></div>
+      <div class="card" style="text-align:center"><p class="tag">minutes of calm</p><p class="stat-big" id="statMinutes">0</p></div>
+      <div class="card" style="text-align:center"><p class="tag">streak</p><p class="stat-big" id="statStreak">0<span style="font-size:18px"> days</span></p><p class="soft-msg" id="streakMsg">every little moment counts ♡</p></div>
+      <div class="card"><p class="tag">minutes this week</p><div class="bar-chart" id="weekChart"></div></div>
+    </div>
+    <h2 class="section-title">my intention 🌸</h2>
+    <div class="card">
+      <div class="chips-row" id="intentionChips"></div>
+      <p class="soft-msg" id="intentionMsg"></p>
+    </div>
+    <h2 class="section-title">privacy center 🔐</h2>
+    <div class="card" id="privacyCard"></div>
+    <p style="text-align:center;margin-top:34px;font-size:12px;color:var(--ink-soft);letter-spacing:.08em">lunabelle ♡ privacy by design · no account needed · your data stays with you</p>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="nav-item active" data-view="home"><span class="ic">🏠</span>Home</button>
+  <button class="nav-item" data-view="meditate"><span class="ic">🧘‍♀️</span>Meditate</button>
+  <button class="nav-item" data-view="mantras"><span class="ic">🎀</span>Mantras</button>
+  <button class="nav-item" data-view="journal"><span class="ic">📖</span>Journal</button>
+  <button class="nav-item" data-view="profile"><span class="ic">🪞</span>Profile</button>
+</nav>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ═════════════════════════ DATA ═════════════════════════ */
+const MEDITATIONS=[
+ {id:1,title:"Soft Morning Light",cat:"Morning Energy",dur:10,lvl:"gentle",scene:"dawn",emoji:"🌅",desc:"Wake slowly. Let the day arrive like sunlight through curtains.",sound:null},
+ {id:2,title:"Rose Petal Confidence",cat:"Confidence",dur:10,lvl:"gentle",scene:"garden",emoji:"🌸",desc:"A tender practice for standing a little taller, softly.",sound:"wind"},
+ {id:3,title:"The Quiet Ocean",cat:"Calm",dur:15,lvl:"all levels",scene:"ocean",emoji:"🌊",desc:"Breathe with the tide until your thoughts grow quiet.",sound:"ocean"},
+ {id:4,title:"Moonlit Bedroom",cat:"Sleep",dur:20,lvl:"all levels",scene:"moon",emoji:"🌙",desc:"A lullaby for your mind, drifting toward deep rest.",sound:"rain"},
+ {id:5,title:"Pink Cloud Drift",cat:"Anxiety Relief",dur:10,lvl:"beginner",scene:"clouds",emoji:"☁️",desc:"For heavy days. Float a little lighter, one breath at a time.",sound:"wind"},
+ {id:6,title:"Heart Reset",cat:"Emotional Reset",dur:15,lvl:"all levels",scene:"candle",emoji:"🕯️",desc:"Put everything down for a while. You can pick it up later.",sound:null},
+ {id:7,title:"Garden of Self-Love",cat:"Self-Love",dur:15,lvl:"gentle",scene:"garden",emoji:"🌷",desc:"Speak kindly to yourself. Mean it, even a little.",sound:"wind"},
+ {id:8,title:"Rainy Window",cat:"Healing",dur:20,lvl:"all levels",scene:"rain",emoji:"🌧️",desc:"Let the rain hold what you can't hold right now.",sound:"rain"},
+ {id:9,title:"Dreamy Galaxy",cat:"Night Meditation",dur:30,lvl:"deep",scene:"galaxy",emoji:"🌌",desc:"A long journey through starlight into deep sleep.",sound:"brown"},
+ {id:10,title:"Golden Focus",cat:"Focus",dur:10,lvl:"gentle",scene:"dawn",emoji:"✨",desc:"Clear the fog. One soft, steady point of attention.",sound:null},
+ {id:11,title:"Satin Stillness",cat:"Deep Relaxation",dur:20,lvl:"deep",scene:"candle",emoji:"🦢",desc:"Unwind every knot. Luxurious, slow, complete rest.",sound:null},
+ {id:12,title:"Mirror, Mirror",cat:"Self-Confidence",dur:5,lvl:"beginner",scene:"clouds",emoji:"🪞",desc:"Five minutes to meet yourself with kindness.",sound:null}
+];
+const CATS=["All","🌸 Self-Love","🎀 Confidence","🦢 Calm","🌙 Sleep","☁️ Anxiety Relief","💗 Emotional Reset","✨ Morning Energy","🌷 Healing","🕯️ Deep Relaxation","🌌 Night Meditation","💫 Focus","🪞 Self-Confidence"];
+const MANTRAS=["I am safe in this moment.","I allow myself to slow down.","I trust myself.","I am becoming the person I want to be.","I deserve peaceful moments.","My mind can rest.","I choose peace over pressure.","I am enough.","Softness is not weakness.","I give myself permission to begin again.","My breath is my anchor.","I am held, even now."];
+const AFFS={
+ "Self-Love":["I treat myself like someone I love.","My heart is worth gentle words.","I am not too much. I am just right."],
+ "Confidence":["I can be nervous and still shine.","Quiet confidence looks beautiful on me.","I don't need to be perfect to be powerful."],
+ "School & Work":["I do my best, and that is enough.","One small step still counts as progress.","My mind is clear and my effort matters."],
+ "Relationships":["I love softly and receive love softly.","The right people feel like calm.","I am whole, with or without anyone's approval."],
+ "Growth":["Becoming takes time, and I'm in no rush.","Every version of me deserves compassion.","I bloom at my own pace."],
+ "Peace":["I release what I cannot control.","Nothing is urgent in this moment.","My peace is my priority."],
+ "Morning":["Today, I choose softness over stress.","A new day, a gentle start.","I welcome today with an open heart."],
+ "Night":["I did enough today.","My worries can wait until morning.","Rest is productive too."],
+ "Future Self":["My future self is already proud of me.","Good things are quietly on their way.","I am building a life I love, slowly."],
+ "Personal Goals":["Small steps, repeated, become magic.","I keep my promises to myself.","Discipline, but make it gentle."]
+};
+const INTENTIONS=["I want to feel calmer.","I want to sleep better.","I want more confidence.","I want to practice self-love.","I want to focus.","I want to release stress."];
+const J_PROMPTS=["How am I feeling today?","What am I grateful for?","What do I need right now?","What am I letting go of?","What am I proud of?"];
+const MOODS=[{e:"🌧",l:"heavy"},{e:"🌥",l:"meh"},{e:"🌤",l:"okay"},{e:"🌷",l:"good"},{e:"✨",l:"glowing"}];
+const SCENES={moon:"scene-moon",clouds:"scene-clouds",garden:"scene-garden",ocean:"scene-ocean",galaxy:"scene-galaxy",candle:"scene-candle",rain:"scene-rain",dawn:"scene-dawn"};
+const BREATHS={box:{name:"box breathing · 4-4-4-4",phases:[["Inhale",4],["Hold",4],["Exhale",4],["Rest",4]]},f478:{name:"4-7-8 · sleep wind-down",phases:[["Inhale",4],["Hold",7],["Exhale",8]]},deep:{name:"deep belly breath",phases:[["Inhale",4],["Exhale",6]]}};
+
+/* ═════════════════════════ STORAGE (private, local only) ═════════════════════════ */
+const DB={
+ get(k,d){try{const v=localStorage.getItem("lunabelle."+k);return v?JSON.parse(v):d}catch(e){return d}},
+ set(k,v){localStorage.setItem("lunabelle."+k,JSON.stringify(v))},
+ all(){const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith("lunabelle."))o[k]=localStorage.getItem(k)}return o},
+ wipe(){Object.keys(DB.all()).forEach(k=>localStorage.removeItem(k))}
+};
+let favs=DB.get("favs",[]),favMantras=DB.get("favMantras",[]),entries=DB.get("entries",[]),
+    moodLog=DB.get("mood",{}),progress=DB.get("progress",{sessions:0,seconds:0,streak:{last:null,count:0},days:{}}),
+    settings=DB.get("settings",{analytics:false,motion:false}),intention=DB.get("intention",null),name=DB.get("name","");
+
+/* ═════════════════════════ HELPERS ═════════════════════════ */
+const $=s=>document.querySelector(s);
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2400)}
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function todayKey(){return new Date().toISOString().slice(0,10)}
+function greeting(){const h=new Date().getHours();const g=h<12?"Good morning":h<19?"Good afternoon":"Good evening";$("#greetingName").textContent=name?g+", "+name:g}
+
+/* ═════════════════════════ AUDIO ENGINE (original, generated) ═════════════════════════ */
+const AE={ctx:null,music:null,nature:null,active:{},
+ init(){if(this.ctx)return;this.ctx=new(window.AudioContext||window.webkitAudioContext)();
+  this.music=this.ctx.createGain();this.music.gain.value=.45;this.music.connect(this.ctx.destination);
+  this.nature=this.ctx.createGain();this.nature.gain.value=.4;this.nature.connect(this.ctx.destination);
+  // dreamy pad: soft detuned sines, slow breathing LFOs
+  [174.61,220,261.63,329.63].forEach((f,i)=>{const o=this.ctx.createOscillator();o.type="sine";o.frequency.value=f;
+   const g=this.ctx.createGain();g.gain.value=0;
+   const lfo=this.ctx.createOscillator();lfo.frequency.value=.06+i*.025;
+   const lg=this.ctx.createGain();lg.gain.value=.04;lfo.connect(lg);lg.connect(g.gain);
+   o.connect(g);g.connect(this.music);o.start();lfo.start();g.gain.setTargetAtTime(.045,this.ctx.currentTime,4)});
+  // airy shimmer bell every ~9s
+  setInterval(()=>{if(AE.playing&&!document.hidden){const t=this.ctx.currentTime;const o=this.ctx.createOscillator();o.type="sine";o.frequency.value=1046.5;
+   const g=this.ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+4);
+   o.connect(g);g.connect(this.music);o.start(t);o.stop(t+4)}},9000);
+ },
+ buffer(kind){const len=this.ctx.sampleRate*3,b=this.ctx.createBuffer(1,len,this.ctx.sampleRate),d=b.getChannelData(0);let last=0;
+  for(let i=0;i<len;i++){const w=Math.random()*2-1;
+   if(kind==="brown"){last=(last+.02*w)/1.02;d[i]=last*3.2}
+   else if(kind==="pink"){last=.98*last+.02*w;d[i]=last*3}
+   else d[i]=w}
+  return b},
+ startSound(kind){if(!this.ctx||this.active[kind])return;const src=this.ctx.createBufferSource();src.buffer=this.buffer(kind);src.loop=true;
+  const f=this.ctx.createBiquadFilter();const g=this.ctx.createGain();g.gain.value=0;
+  if(kind==="rain"){f.type="bandpass";f.frequency.value=1400;f.Q.value=.6;g.gain.setTargetAtTime(.5,this.ctx.currentTime,2)}
+  if(kind==="ocean"){f.type="lowpass";f.frequency.value=480;
+   const lfo=this.ctx.createOscillator();lfo.frequency.value=.09;const lg=this.ctx.createGain();lg.gain.value=.35;lfo.connect(lg);lg.connect(g.gain);lfo.start();
+   g.gain.setTargetAtTime(.4,this.ctx.currentTime,2)}
+  if(kind==="wind"){f.type="lowpass";f.frequency.value=340;
+   const lfo=this.ctx.createOscillator();lfo.frequency.value=.13;const lg=this.ctx.createGain();lg.gain.value=.5;lfo.connect(lg);lg.connect(g.gain);lfo.start();
+   g.gain.setTargetAtTime(.45,this.ctx.currentTime,2)}
+  if(kind==="brown"){f.type="lowpass";f.frequency.value=220;g.gain.setTargetAtTime(.55,this.ctx.currentTime,2)}
+  src.connect(f);f.connect(g);g.connect(this.nature);src.start();this.active[kind]={src,g}},
+ stopSound(kind){const h=this.active[kind];if(!h)return;h.g.gain.setTargetAtTime(0,this.ctx.currentTime,1.2);setTimeout(()=>{try{h.src.stop()}catch(e){}},3000);delete this.active[kind]},
+ stopAllNature(){Object.keys(this.active).forEach(k=>this.stopSound(k))},
+ playing:false};
+
+/* speech guidance (browser voice, local) */
+function speak(text){if(!("speechSynthesis"in window))return;const u=new SpeechSynthesisUtterance(text);
+ u.rate=.88;u.pitch=1.15;u.volume=$("#volVoice").value/100;
+ const v=speechSynthesis.getVoices().find(v=>/female|samantha|zira|google uk english female/i.test(v.name));if(v)u.voice=v;
+ speechSynthesis.speak(u)}
+
+/* ═════════════════════════ PLAYER ═════════════════════════ */
+let currentMed=null,playing=false,elapsed=0,tickInt=null;
+function openPlayer(id){currentMed=MEDITATIONS.find(m=>m.id===id);elapsed=0;
+ $("#playerTitle").textContent=currentMed.emoji+" "+currentMed.title;
+ $("#playerDesc").textContent=currentMed.desc+" · "+currentMed.dur+" min · "+currentMed.lvl;
+ $("#timeTotal").textContent=fmt(currentMed.dur*60);setScene(currentMed.scene);
+ $("#favPlayerBtn").textContent=favs.includes(id)?"♥":"♡";$("#favPlayerBtn").classList.toggle("faved",favs.includes(id));
+ updateFavList();showView("player")}
+function setScene(key){currentMed&&(currentMed._scene=key);
+ $("#playerScene").className="player-scene "+SCENES[key];
+ $("#sceneEmoji").textContent={moon:"🌙",clouds:"☁️",garden:"🌸",ocean:"🌊",galaxy:"🌌",candle:"🕯️",rain:"🌧️",dawn:"🌅"}[key];
+ document.querySelectorAll(".scene-dot").forEach(d=>d.classList.toggle("active",d.dataset.scene===key))}
+function togglePlay(){AE.init();if(AE.ctx.state==="suspended")AE.ctx.resume();
+ playing=!playing;AE.playing=playing;
+ $("#bigPlay").textContent=playing?"❚❚":"▶";$("#playerShell").parentElement.classList.toggle("playing",playing);
+ if(playing){startTick();if(currentMed.sound)AE.startSound(currentMed.sound);
+  if($("#guideToggle").checked)speak("Welcome. "+currentMed.title+". "+currentMed.desc)}
+ else{stopTick();speechSynthesis&&speechSynthesis.cancel()}}
+function startTick(){stopTick();const total=currentMed.dur*60;tickInt=setInterval(()=>{elapsed++;
+ $("#progFill").style.width=Math.min(100,elapsed/total*100)+"%";$("#timeLeft").textContent=fmt(total-elapsed);
+ if(elapsed>=total)completeSession()},1000)}
+function stopTick(){clearInterval(tickInt)}
+function completeSession(){playing=false;AE.playing=false;AE.stopAllNature();stopTick();speechSynthesis&&speechSynthesis.cancel();
+ $("#bigPlay").textContent="▶";$("#progFill").style.width="100%";
+ progress.sessions++;progress.seconds+=currentMed.dur*60;
+ const t=todayKey(),y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+ if(progress.streak.last!==t){progress.streak.count=(progress.streak.last===y)?progress.streak.count+1:1;progress.streak.last=t}
+ const d=progress.days[t]||{min:0};d.min+=currentMed.dur;progress.days[t]=d;
+ DB.set("progress",progress);renderProgress();
+ toast("session complete ♡ you took time for yourself today");showView("meditate")}
+function nextMed(d){const i=MEDITATIONS.findIndex(m=>m.id===currentMed.id);openPlayer(MEDITATIONS[(i+d+MEDITATIONS.length)%MEDITATIONS.length].id)}
+
+/* ═════════════════════════ VIEWS & RENDER ═════════════════════════ */
+function showView(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+ $("#view-"+v).classList.add("active");
+ document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===v));
+ if(v==="profile")renderProgress();if(v==="journal")renderEntries();window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll(".nav-item").forEach(n=>n.onclick=()=>showView(n.dataset.view));
+
+function renderMeds(filter="All"){$("#medGrid").innerHTML=MEDITATIONS.filter(m=>filter==="All"||m.cat===filter).map(m=>
+ `<article class="card med-card" onclick="openPlayer(${m.id})" tabindex="0" role="button" aria-label="Play ${m.title}" onkeydown="if(event.key==='Enter')openPlayer(${m.id})">
+  <div class="med-scene ${SCENES[m.scene]}"><span class="emoji">${m.emoji}</span><span class="play-badge">▶</span></div>
+  <div class="med-body"><h3>${m.title}</h3><p style="font-size:13px;color:var(--ink-soft);margin-top:4px">${m.desc}</p>
+  <div class="med-meta"><span class="pill">${m.dur} min</span><span class="pill">${m.cat}</span><span class="pill">${m.lvl}</span>
+  <button class="fav-btn ${favs.includes(m.id)?"faved":""}" onclick="event.stopPropagation();toggleFavMed(${m.id})" aria-label="Favorite">${favs.includes(m.id)?"♥":"♡"}</button></div></div></article>`).join("")}
+function toggleFavMed(id){favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];DB.set("favs",favs);
+ renderMeds(currentFilter);openPlayerRefreshFav();updateFavList();toast(favs.includes(id)?"saved to favorites ♡":"removed")}
+function openPlayerRefreshFav(){if(!currentMed)return;$("#favPlayerBtn").textContent=favs.includes(currentMed.id)?"♥":"♡";$("#favPlayerBtn").classList.toggle("faved",favs.includes(currentMed.id))}
+function updateFavList(){const favList=MEDITATIONS.filter(m=>favs.includes(m.id));
+ $("#continueRow").innerHTML=favList.length?favList.slice(0,2).map(m=>
+  `<div class="card med-card" onclick="openPlayer(${m.id})"><div class="med-scene ${SCENES[m.scene]}"><span class="emoji">${m.emoji}</span></div>
+  <div class="med-body"><h3>${m.title}</h3><div class="med-meta"><span class="pill">${m.dur} min</span><span class="pill">continue ♡</span></div></div></div>`).join("")
+ :`<div class="card"><p class="soft-msg">favorite a meditation and it will wait for you here ♡</p></div>`;
+ const pool=intention?MEDITATIONS.filter(m=>m.cat.toLowerCase().includes(intention.split(" ")[4]?.toLowerCase()||"")):MEDITATIONS;
+ const reco=(pool.length?pool:MEDITATIONS).slice(0,2);
+ $("#recoRow").innerHTML=reco.map(m=>`<div class="card med-card" onclick="openPlayer(${m.id})"><div class="med-scene ${SCENES[m.scene]}"><span class="emoji">${m.emoji}</span></div>
+  <div class="med-body"><h3>${m.title}</h3><p style="font-size:13px;color:var(--ink-soft)">${m.desc}</p><div class="med-meta"><span class="pill">${m.dur} min</span><span class="pill">${m.cat}</span></div></div></div>`).join("")}
+
+/* categories + scene dots */
+let currentFilter="All";
+$("#catChips").innerHTML=CATS.map((c,i)=>`<button class="chip ${i===0?"active":""}" data-cat="${c}">${c}</button>`).join("");
+document.querySelectorAll("#catChips .chip").forEach(ch=>ch.onclick=()=>{currentFilter=ch.dataset.cat;
+ document.querySelectorAll("#catChips .chip").forEach(x=>x.classList.toggle("active",x===ch));renderMeds(currentFilter)});
+$("#scenePicker").innerHTML=Object.keys(SCENES).map(k=>`<button class="scene-dot ${SCENES[k]}" data-scene="${k}" aria-label="Scene ${k}">{${""}}</button>`).join("");
+document.querySelectorAll(".scene-dot").forEach(d=>d.textContent={moon:"🌙",clouds:"☁️",garden:"🌸",ocean:"🌊",galaxy:"🌌",candle:"🕯️",rain:"🌧️",dawn:"🌅"}[d.dataset.scene]);
+document.querySelectorAll(".scene-dot").forEach(d=>d.onclick=()=>{AE.stopAllNature();setScene(d.dataset.scene);
+ const snd={moon:"rain",clouds:"wind",garden:"wind",ocean:"ocean",galaxy:"brown",candle:null,rain:"rain",dawn:null}[d.dataset.scene];
+ if(snd&&playing)AE.startSound(snd)});
+
+/* player controls */
+$("#bigPlay").onclick=togglePlay;$("#prevBtn").onclick=()=>nextMed(-1);$("#nextBtn").onclick=()=>nextMed(1);
+$("#favPlayerBtn").onclick=()=>currentMed&&toggleFavMed(currentMed.id);
+$("#volMusic").oninput=e=>{AE.init();AE.music.gain.value=e.target.value/100*.9};
+$("#volNature").oninput=e=>{AE.init();AE.nature.gain.value=e.target.value/100*.9};
+$("#quickStart").onclick=()=>openPlayer(4);
+
+/* ═════════════════════════ MANTRAS & AFFIRMATIONS ═════════════════════════ */
+let mIdx=new Date().getDate()%MANTRAS.length,affCat="Self-Love",affIdx=0;
+function nextMantra(anim){mIdx=(mIdx+1)%MANTRAS.length;const el=$("#mantraMain");el.textContent=MANTRAS[mIdx];
+ if(!settings.motion){el.classList.remove("reveal-anim");void el.offsetWidth;el.classList.add("reveal-anim")}
+ refreshFavMantraBtn()}
+function refreshFavMantraBtn(){const saved=favMantras.includes(MANTRAS[mIdx]);
+ $("#favMantraBtn").textContent=saved?"♥ saved":"♡ save";$("#favMantraBtn").style.color=saved?"#E2556B":""}
+function toggleFavMantra(){const t=MANTRAS[mIdx];favMantras=favMantras.includes(t)?favMantras.filter(x=>x!==t):[...favMantras,t];
+ DB.set("favMantras",favMantras);refreshFavMantraBtn();renderFavMantras();
+ toast(favMantras.includes(t)?"mantra saved ♡":"removed")}
+function renderFavMantras(){$("#favMantrasList").innerHTML=favMantras.length?favMantras.map(t=>
+ `<div class="card"><p class="mantra-text" style="font-size:18px">“${t}”</p></div>`).join("")
+ :`<div class="card"><p class="soft-msg">save the mantras that hold you ♡</p></div>`}
+$("#affChips").innerHTML=Object.keys(AFFS).map((c,i)=>`<button class="chip ${i===0?"active":""}" data-c="${c}">${c}</button>`).join("");
+document.querySelectorAll("#affChips .chip").forEach(ch=>ch.onclick=()=>{affCat=ch.dataset.c;affIdx=0;
+ document.querySelectorAll("#affChips .chip").forEach(x=>x.classList.toggle("active",x===ch));nextAffirmation()});
+function nextAffirmation(){affIdx=(affIdx+1)%AFFS[affCat].length;const el=$("#affMain");
+ el.textContent="“"+AFFS[affCat][affIdx]+"”";
+ if(!settings.motion){el.classList.remove("reveal-anim");void el.offsetWidth;el.classList.add("reveal-anim")}}
+function newAffirmation(){const cats=Object.keys(AFFS);affCat=cats[Math.floor(Math.random()*cats.length)];affIdx=Math.floor(Math.random()*3);
+ $("#affMain").textContent="“"+AFFS[affCat][affIdx]+"”";
+ const el=$("#affMain");if(!settings.motion){el.classList.remove("reveal-anim");void el.offsetWidth;el.classList.add("reveal-anim")}}
+$("#dailyAffirm").textContent="“"+AFFS["Peace"][new Date().getDate()%3]+"”";
+$("#dailyMantra").textContent="“"+MANTRAS[new Date().getDate()%MANTRAS.length]+"”";
+
+/* ═════════════════════════ MOOD ═════════════════════════ */
+$("#moodRow").innerHTML=MOODS.map((m,i)=>`<button class="mood-btn ${moodLog[todayKey()]===i?"picked":""}" onclick="pickMood(${i})" aria-label="Feeling ${m.l}">${m.e}<div style="font-size:10px;color:var(--ink-soft);letter-spacing:.08em">${m.l}</div></button>`).join("");
+function pickMood(i){moodLog[todayKey()]=i;DB.set("mood",moodLog);
+ document.querySelectorAll(".mood-btn").forEach((b,bi)=>b.classList.toggle("picked",bi===i));
+ $("#moodMsg").textContent=["that's okay. be gentle with yourself today ♡","some days are cloudy. this one will pass ♡","a soft, steady day. that's lovely ♡","so happy for you ♡","you're glowing ✨ keep shining ♡"][i]}
+
+/* ═════════════════════════ BREATHING ═════════════════════════ */
+let breathType="box",breathOn=false,bT=null;
+$("#breathChips").innerHTML=Object.keys(BREATHS).map((k,i)=>`<button class="chip ${i===0?"active":""}" data-b="${k}">${BREATHS[k].name}</button>`).join("");
+document.querySelectorAll("#breathChips .chip").forEach(ch=>ch.onclick=()=>{stopBreath();breathType=ch.dataset.b;
+ $("#breathName").textContent=BREATHS[breathType].name;
+ document.querySelectorAll("#breathChips .chip").forEach(x=>x.classList.toggle("active",x===ch));
+ $("#breathPhase").textContent="ready?";$("#breathCount").textContent="press begin when you're ready ♡";
+ $("#breathCircle").style.transform="scale(1)"});
+function stopBreath(){breathOn=false;clearTimeout(bT);$("#breathBtn").textContent="begin"}
+$("#breathBtn").onclick=()=>{if(breathOn){stopBreath();return}
+ breathOn=true;$("#breathBtn").textContent="rest now";runPhase(0)};
+function runPhase(i){if(!breathOn)return;const[label,secs]=BREATHS[breathType].phases[i%BREATHS[breathType].phases.length];
+ const c=$("#breathCircle");$("#breathPhase").textContent=label;
+ if(!settings.motion)c.style.transitionDuration=secs+"s";
+ c.style.transform=(label==="Inhale")?"scale(1.45)":(label==="Exhale"?"scale(.8)":c.style.transform);
+ let left=secs;$("#breathCount").textContent=left+"s · in… out…";
+ const iv=setInterval(()=>{left--;if(left<=0){clearInterval(iv)}else $("#breathCount").textContent=left+"s"},1000);
+ bT=setTimeout(()=>runPhase(i+1),secs*1000)}
+
+/* ═════════════════════════ JOURNAL (private, local) ═════════════════════════ */
+let jPrompt=J_PROMPTS[0];
+$("#journalPrompts").innerHTML=J_PROMPTS.map((p,i)=>`<button class="chip ${i===0?"active":""}" data-p="${p}">${p}</button>`).join("");
+document.querySelectorAll("#journalPrompts .chip").forEach(ch=>ch.onclick=()=>{jPrompt=ch.dataset.p;
+ document.querySelectorAll("#journalPrompts .chip").forEach(x=>x.classList.toggle("active",x===ch))});
+function saveEntry(){const t=$("#journalText").value.trim();if(!t){toast("write a little something first ♡");return}
+ entries.unshift({p:jPrompt,t:t,d:new Date().toLocaleString()});DB.set("entries",entries);
+ $("#journalText").value="";renderEntries();toast("kept safe, only for you 🔒")}
+function delEntry(i){entries.splice(i,1);DB.set("entries",entries);renderEntries();toast("entry erased ♡")}
+function renderEntries(){$("#entryList").innerHTML=entries.length?entries.map((e,i)=>
+ `<div class="entry"><p class="e-date">${e.d}</p><p class="e-prompt">${e.p}</p><p class="e-text">${e.t.replace(/</g,"&lt;")}</p>
+ <button class="btn-ghost" style="margin-top:8px;padding:6px 14px;font-size:11px" onclick="delEntry(${i})">erase</button></div>`).join("")
+ :`<div class="card"><p class="soft-msg">your pages are blank and waiting, gently ♡</p></div>`}
+
+/* ═════════════════════════ PROGRESS & SETTINGS ═════════════════════════ */
+function renderProgress(){$("#statSessions").textContent=progress.sessions;
+ $("#statMinutes").textContent=Math.round(progress.seconds/60);
+ $("#statStreak").innerHTML=progress.streak.count+'<span style="font-size:18px"> days</span>';
+ $("#streakMsg").textContent=progress.streak.count>0?"every little moment counts ♡":"welcome back ♡ begin whenever you're ready";
+ const days=[],now=new Date();
+ for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);const k=d.toISOString().slice(0,10);
+  days.push({k,label:["su","mo","tu","we","th","fr","sa"][d.getDay()],min:(progress.days[k]||{min:0}).min})}
+ const max=Math.max(5,...days.map(d=>d.min));
+ $("#weekChart").innerHTML=days.map(d=>`<div class="bar" style="height:${Math.max(4,d.min/max*100)}%" title="${d.min} min"><span class="bar-day">${d.label}</span></div>`).join("");
+ $("#intentionChips").innerHTML=INTENTIONS.map(x=>`<button class="chip ${intention===x?"active":""}" data-i="${x}">${x}</button>`).join("");
+ document.querySelectorAll("#intentionChips .chip").forEach(ch=>ch.onclick=()=>{intention=ch.dataset.i;DB.set("intention",intention);
+  document.querySelectorAll("#intentionChips .chip").forEach(x=>x.classList.toggle("active",x===ch));
+  $("#intentionMsg").textContent="we'll gently recommend sessions for this ♡";updateFavList()});
+ $("#intentionMsg").textContent=intention?"we'll gently recommend sessions for this ♡":"choose what your heart needs ♡";
+ renderPrivacy()}
+function renderPrivacy(){
+ const rows=[
+  {l:"Anonymous product analytics",d:"Only aggregated counts (sessions, completion rates, errors). Never journal entries, moods, names or anything personal. Stored locally.",k:"analytics"},
+  {l:"Reduce animations",d:"Calms all motion for comfort and accessibility.",k:"motion"},
+ ];
+ $("#privacyCard").innerHTML=rows.map(r=>`<div class="setting-row"><div><p class="s-label">${r.l}</p><p class="s-desc">${r.d}</p></div>
+  <button class="toggle ${settings[r.k]?"on":""}" role="switch" aria-checked="${settings[r.k]}" aria-label="${r.l}" onclick="toggleSetting('${r.k}')"></button></div>`).join("")+
+ `<div class="setting-row"><div><p class="s-label">Export my data</p><p class="s-desc">Download everything Lunabelle stores on this device (JSON).</p></div>
+  <button class="btn-ghost" onclick="exportData()">⬇ export</button></div>
+ <div class="setting-row"><div><p class="s-label">Erase everything</p><p class="s-desc">Delete all local data: journal, progress, favorites, settings. Instant and permanent.</p></div>
+  <button class="btn-ghost" style="color:#B34A5E" onclick="wipeData()">✕ delete all</button></div>
+ <p class="privacy-note">🌙 <span><strong>Privacy by design.</strong> Lunabelle works fully without an account. Your journal, moods and progress never leave this device. There are no trackers, no ads, no third-party pixels — just you and your calm.</span></p>`}
+function toggleSetting(k){settings[k]=!settings[k];DB.set("settings",settings);
+ if(k==="motion"){document.body.classList.toggle("no-motion",settings.motion);$("#motionToggle").classList.toggle("active",settings.motion);$("#motionToggle").setAttribute("aria-pressed",settings.motion)}
+ renderPrivacy();toast(settings[k]?"enabled ♡":"disabled")}
+function exportData(){const blob=new Blob([JSON.stringify(DB.all(),null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="lunabelle-my-data.json";a.click();
+ toast("your data, in your hands ♡")}
+function wipeData(){if(!confirm("Erase everything? This cannot be undone."))return;DB.wipe();location.reload()}
+function setName(v){name=v.trim();DB.set("name",name);greeting();toast("lovely to meet you, "+(name||"beautiful")+" ♡")}
+
+/* ═════════════════════════ SLEEP MODE ═════════════════════════ */
+$("#sleepToggle").onclick=()=>{const on=document.body.classList.toggle("sleep-mode");
+ $("#sleepToggle").classList.toggle("active",on);$("#sleepToggle").setAttribute("aria-pressed",on);
+ if(on){toast("sleep mode on 🌙 the night is yours")}else toast("good morning, sunshine ✨")};
+$("#motionToggle").onclick=()=>toggleSetting("motion");
+
+/* ═════════════════════════ INIT ═════════════════════════ */
+greeting();renderMeds();updateFavList();refreshFavMantraBtn();renderFavMantras();nextAffirmation();renderEntries();renderProgress();
+if(name)$("#nameInput").value=name;
+if(settings.motion){document.body.classList.add("no-motion");$("#motionToggle").classList.add("active")}
+document.addEventListener("keydown",e=>{if(e.key===" "&&$("#view-player").classList.contains("active")&&e.target.tagName!=="INPUT"){e.preventDefault();togglePlay()}});
+if("speechSynthesis"in window)speechSynthesis.getVoices();
+</script>
+</body>
+</html>
