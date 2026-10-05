@@ -1,0 +1,9 @@
+{
+  "name": "lunabelle",
+  "version": "1.0.0",
+  "private": false,
+  "description": "A dreamy, private-by-design meditation and self-care web app.",
+  "scripts": {
+    "test": "node tests/smoke.test.js"
+  }
+}

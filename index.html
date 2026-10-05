@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+&lt;<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#FDEEF4" name="theme-color"/>
+<link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🌙&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<title>Lunabelle ♡ your little peaceful corner</title>
+<meta content="A dreamy, feminine meditation sanctuary. Private by design." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Jost:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+
+<link href="css/styles.css" rel="stylesheet"/></head>
+<body>
+<div class="sparkle" style="top:14%;left:6%">✦</div>
+<div class="sparkle" style="top:60%;left:90%;animation-delay:2s">✧</div>
+<div class="sparkle" style="top:32%;left:94%;animation-delay:4s">✦</div>
+<div class="sparkle" style="top:78%;left:8%;animation-delay:1s">♡</div>
+<header class="topbar">
+<div class="logo"><span class="moon">🌙</span> Lunabelle <span style="font-size:12px;font-family:var(--sans);color:var(--ink-soft);letter-spacing:.15em;margin-left:4px">EST. 2026</span></div>
+<div class="top-actions">
+<button aria-label="Toggle sleep mode" aria-pressed="false" class="icon-btn" id="sleepToggle" title="Sleep mode">🌙</button>
+<button aria-label="Toggle reduced motion" aria-pressed="false" class="icon-btn" id="motionToggle" title="Reduce animations">✿</button>
+</div>
+</header>
+<main>
+<!-- ═══════════ HOME ═══════════ -->
+<section aria-label="Home" class="view active" id="view-home">
+<p class="tag">your little peaceful corner of the internet</p>
+<h1 class="greeting" style="margin-top:8px"><span id="greetingName">Good evening</span> <span style="color:var(--dustyrose)">♡</span>
+<div class="sub" id="dailyMsg">Take a little moment for yourself today.</div>
+</h1>
+<div style="display:flex;gap:14px;margin:22px 0;flex-wrap:wrap">
+<button class="btn-primary" id="quickStart">✦ start meditation</button>
+<button class="btn-ghost" onclick="showView('breathe')">🌬 breathing exercises</button>
+</div>
+<div class="grid grid-2">
+<div class="card">
+<p class="tag">today's mantra</p>
+<p class="mantra-text" id="dailyMantra" style="font-size:21px;margin-top:10px">“I am safe in this moment.”</p>
+<button class="btn-ghost" onclick="showView('mantras')" style="margin-top:14px">all mantras →</button>
+</div>
+<div class="card">
+<p class="tag">daily affirmation ✧</p>
+<p class="mantra-text reveal-anim" id="dailyAffirm" style="font-size:21px;margin-top:10px"></p>
+<button class="btn-ghost" onclick="newAffirmation()" style="margin-top:14px">another one ♡</button>
+</div>
+</div>
+<h2 class="section-title">how are you feeling? <span style="font-size:16px">🌷</span></h2>
+<div class="card">
+<div class="mood-row" id="moodRow"></div>
+<p class="soft-msg" id="moodMsg" style="text-align:center"></p>
+</div>
+<h2 class="section-title">continue your journey ✦</h2>
+<div class="grid grid-2" id="continueRow"></div>
+<h2 class="section-title">just for you ♡</h2>
+<div class="grid grid-2" id="recoRow"></div>
+</section>
+<!-- ═══════════ MEDITATE ═══════════ -->
+<section aria-label="Meditation library" class="view" id="view-meditate">
+<h1 class="greeting" style="font-size:30px">the meditation library <span style="font-size:22px">🦢</span></h1>
+<p class="sub" style="color:var(--ink-soft);font-size:14px;margin-top:6px">choose a soft place to land.</p>
+<div class="chips-row" id="catChips" style="margin-top:18px"></div>
+<div class="grid grid-2" id="medGrid"></div>
+</section>
+<!-- ═══════════ PLAYER ═══════════ -->
+<section aria-label="Meditation player" class="view" id="view-player">
+<button class="btn-ghost" onclick="showView('meditate')" style="margin-bottom:16px">← back to library</button>
+<div class="player-shell" id="playerShell">
+<div class="player-scene" id="playerScene">
+<span class="emoji" id="sceneEmoji">🌙</span>
+<div class="calm-overlay"></div>
+<button aria-label="Play or pause" class="big-play" id="bigPlay">▶</button>
+</div>
+<h2 id="playerTitle" style="margin-top:20px;font-size:26px"></h2>
+<p id="playerDesc" style="font-size:13px;color:var(--ink-soft);margin-top:4px"></p>
+<div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+<div class="time-row"><span id="timeLeft">0:00</span><span id="timeTotal">0:00</span></div>
+<div style="display:flex;gap:10px;justify-content:center;margin-top:16px;align-items:center">
+<button aria-label="Previous meditation" class="btn-ghost" id="prevBtn">⏮</button>
+<button aria-label="Favorite" class="btn-ghost" id="favPlayerBtn">♡</button>
+<button aria-label="Next meditation" class="btn-ghost" id="nextBtn">⏭</button>
+</div>
+<div class="slider-row"><span>✦ music</span><input aria-label="Music volume" id="volMusic" max="100" min="0" type="range" value="45"/></div>
+<div class="slider-row"><span>🌧 nature</span><input aria-label="Nature sounds volume" id="volNature" max="100" min="0" type="range" value="40"/></div>
+<div class="slider-row"><span>🎙 guide</span><input aria-label="Voice volume" id="volVoice" max="100" min="0" type="range" value="70"/></div>
+<label style="display:flex;gap:8px;align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);margin-top:8px">
+<input id="guideToggle" type="checkbox"/> spoken guidance (soft voice)
+      </label>
+<p class="tag" style="margin-top:18px">change your surroundings</p>
+<div class="scene-picker" id="scenePicker"></div>
+<p class="soft-msg" style="text-align:center;margin-top:22px">take a breath. you are safe here.<br/>this moment is yours ♡</p>
+</div>
+</section>
+<!-- ═══════════ MANTRAS ═══════════ -->
+<section aria-label="Mantras" class="view" id="view-mantras">
+<h1 class="greeting" style="font-size:30px">mantras &amp; affirmations <span style="font-size:22px">🎀</span></h1>
+<div class="card mantra-card" style="margin-top:16px">
+<span class="quote-mark">“</span>
+<p class="mantra-text" id="mantraMain">I allow myself to slow down.</p>
+<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<button class="btn-ghost" onclick="nextMantra(false)">✧ new mantra</button>
+<button class="btn-ghost" id="favMantraBtn" onclick="toggleFavMantra()">♡ save</button>
+</div>
+</div>
+<div class="chips-row" id="affChips" style="margin-top:22px"></div>
+<div class="card mantra-card" style="margin-top:8px">
+<span class="quote-mark" style="font-size:40px">✦</span>
+<p class="mantra-text" id="affMain" style="font-size:22px"></p>
+<button class="btn-ghost" onclick="nextAffirmation()" style="margin-top:16px">reveal another ♡</button>
+</div>
+<h2 class="section-title">saved ♡</h2>
+<div class="grid grid-2" id="favMantrasList"></div>
+</section>
+<!-- ═══════════ BREATHE ═══════════ -->
+<section aria-label="Breathing exercises" class="view" id="view-breathe">
+<h1 class="greeting" style="font-size:30px">breathing exercises <span style="font-size:22px">🌬</span></h1>
+<div class="chips-row" id="breathChips" style="margin-top:16px"></div>
+<div class="card" style="margin-top:8px">
+<div class="breath-stage">
+<div class="breath-circle" id="breathCircle"><span id="breathPhase">ready?</span></div>
+</div>
+<p class="breath-label" id="breathName">box breathing · 4-4-4-4</p>
+<p class="breath-count" id="breathCount">press begin when you're ready ♡</p>
+<div style="display:flex;gap:10px;justify-content:center;margin-top:16px">
+<button class="btn-primary" id="breathBtn" style="padding:12px 26px">begin</button>
+</div>
+</div>
+</section>
+<!-- ═══════════ JOURNAL ═══════════ -->
+<section aria-label="Private journal" class="view" id="view-journal">
+<h1 class="greeting" style="font-size:30px">dear diary… <span style="font-size:22px">🕯</span></h1>
+<p class="sub" style="color:var(--ink-soft);font-size:14px;margin-top:6px">a private space. only for you.</p>
+<div class="card" style="margin-top:18px">
+<div class="journal-prompts" id="journalPrompts"></div>
+<textarea aria-label="Journal entry" id="journalText" placeholder="pour your heart out, softly…"></textarea>
+<div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+<button class="btn-primary" onclick="saveEntry()" style="padding:12px 24px">✦ keep this moment</button>
+</div>
+<p class="privacy-note">🔒 <span><strong>100% private.</strong> Your entries live only on this device. Nothing is sent anywhere, ever. No AI training, no ads, no analytics on your words. You can export or erase everything in the Privacy Center.</span></p>
+</div>
+<h2 class="section-title">your entries 🌙</h2>
+<div id="entryList"></div>
+</section>
+<!-- ═══════════ PROFILE / PROGRESS / PRIVACY ═══════════ -->
+<section aria-label="Profile, progress and privacy" class="view" id="view-profile">
+<h1 class="greeting" style="font-size:30px">hello, beautiful <span style="font-size:22px">🪞</span></h1>
+<div style="margin-top:16px;max-width:340px">
+<label class="tag" for="nameInput">what should we call you?</label>
+<input id="nameInput" onchange="setName(this.value)" placeholder="your name ♡" style="margin-top:6px" type="text"/>
+</div>
+<h2 class="section-title">your gentle progress ✦</h2>
+<div class="grid grid-2">
+<div class="card" style="text-align:center"><p class="tag">sessions</p><p class="stat-big" id="statSessions">0</p></div>
+<div class="card" style="text-align:center"><p class="tag">minutes of calm</p><p class="stat-big" id="statMinutes">0</p></div>
+<div class="card" style="text-align:center"><p class="tag">streak</p><p class="stat-big" id="statStreak">0<span style="font-size:18px"> days</span></p><p class="soft-msg" id="streakMsg">every little moment counts ♡</p></div>
+<div class="card"><p class="tag">minutes this week</p><div class="bar-chart" id="weekChart"></div></div>
+</div>
+<h2 class="section-title">my intention 🌸</h2>
+<div class="card">
+<div class="chips-row" id="intentionChips"></div>
+<p class="soft-msg" id="intentionMsg"></p>
+</div>
+<h2 class="section-title">privacy center 🔐</h2>
+<div class="card" id="privacyCard"></div>
+<p style="text-align:center;margin-top:34px;font-size:12px;color:var(--ink-soft);letter-spacing:.08em">lunabelle ♡ privacy by design · no account needed · your data stays with you</p>
+</section>
+</main>
+<nav aria-label="Main navigation" class="bottom-nav">
+<button class="nav-item active" data-view="home"><span class="ic">🏠</span>Home</button>
+<button class="nav-item" data-view="meditate"><span class="ic">🧘‍♀️</span>Meditate</button>
+<button class="nav-item" data-view="mantras"><span class="ic">🎀</span>Mantras</button>
+<button class="nav-item" data-view="journal"><span class="ic">📖</span>Journal</button>
+<button class="nav-item" data-view="profile"><span class="ic">🪞</span>Profile</button>
+</nav>
+<div aria-live="polite" id="toast" role="status"></div>
+
+<script defer="True" src="js/app.js"></script></body>
+</html>
