@@ -1,121 +1,68 @@
+
 # 🌙 Lunabelle
 
-> A dreamy, feminine meditation and self-care web app — private by design.
+A dreamy, feminine meditation and self-care web app — private by design.
 
-Lunabelle is a **vanilla HTML/CSS/JavaScript** wellness interface designed to work directly in the browser without a backend or account.
+Lunabelle is a peaceful digital space designed to support mindfulness, relaxation, emotional awareness, and everyday self-care through simple interactive experiences.
 
 ## ✨ Features
 
-- 🧘 Meditation library with categories and favorites
-- 🎧 Browser-generated ambient audio using the Web Audio API
-- 🌬 Guided breathing exercises
-- 💭 Mantras and daily affirmations
-- 🌷 Mood check-in
-- 📖 Private journal stored locally
-- 📊 Meditation progress and streak tracking
-- 🌙 Sleep mode
-- ♿ Reduced-motion support
-- 🔒 Local data storage, export and full wipe
-- 📱 Responsive layout
-- ⌨️ Keyboard support for the meditation player
+- **Meditation Library:** Explore meditation sessions for relaxation and mindfulness.
+- **Ambient Audio:** Enjoy calming soundscapes generated with the Web Audio API.
+- **Guided Breathing:** Follow breathing exercises to create moments of calm.
+- **Mantras & Affirmations:** Discover positive reminders and encouraging words.
+- **Mood Check-in:** Record how you feel and reflect on your emotional well-being.
+- **Personal Journal:** Write private reflections saved locally on your device.
+- **Progress Tracking:** Follow your activity and meditation streaks.
+- **Sleep Mode:** Enjoy a calmer interface for nighttime use.
+- **Reduced Motion:** Supports accessibility preferences for reduced animations.
+- **Data Export & Deletion:** Export or delete locally stored information.
+- **Responsive Design:** Works across desktop, tablet, and mobile devices.
+- **Keyboard Accessibility:** Navigate supported features using a keyboard.
 
-## 🗂️ Project structure
+## 🛠️ Built With
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Web Audio API
+- LocalStorage API
+
+## 📁 Project Structure
 
 ```text
-lunabelle/
-├── index.html              # Application markup
+Lunabelle/
+│
+├── index.html
+│
 ├── css/
-│   └── styles.css          # Design system, layout and responsive styles
+│   └── styles.css
+│
 ├── js/
-│   └── app.js              # Application state, UI logic, audio and storage
+│   └── app.js
+│
 ├── tests/
-│   └── smoke.test.js       # Static architecture/smoke checks
+│   └── smoke.test.js
+│
 ├── .gitignore
 ├── package.json
-└── README.md
+├── README.md
+└── LICENSE
 ```
 
-The original project was a single `index.html`. It has been separated into clear layers so the codebase is easier to maintain, test and extend.
+## 🚀 Getting Started
 
-## 🧱 Architecture
+You can run Lunabelle locally without installing additional dependencies for the basic experience.
 
-### HTML
-`index.html` contains the semantic page structure and accessible controls.
+### Option 1: Open Directly
 
-### CSS
-`css/styles.css` contains:
+1. Download or clone the repository.
+2. Open the project folder.
+3. Open `index.html` in your browser.
 
-- Design tokens
-- Global styles
-- Components
-- Meditation scenes
-- Player styles
-- Responsive rules
-- Accessibility/reduced-motion rules
+### Option 2: Use a Local Server
 
-### JavaScript
-`js/app.js` contains:
-
-- Static application data
-- Local storage abstraction
-- Utility functions
-- Audio engine
-- Player state
-- View navigation
-- Meditation rendering
-- Favorites
-- Mantras/affirmations
-- Mood tracking
-- Breathing engine
-- Journal
-- Progress/settings
-- Data export/wipe
-- Application initialization
-
-## 🔒 Privacy model
-
-Lunabelle is intentionally client-side.
-
-User data is stored under the `lunabelle.*` namespace in `localStorage`. The application does not require an account or backend to operate.
-
-Stored information includes:
-
-- Journal entries
-- Mood selections
-- Meditation progress
-- Favorites
-- Preferences
-- Display name
-- Meditation intention
-
-Users can export their locally stored Lunabelle data as JSON or erase it from the application.
-
-> Important: browser `localStorage` is convenient client-side storage, not encrypted secure storage. Do not treat it as a secure vault for highly sensitive information.
-
-## 🧪 Testing
-
-The repository includes lightweight static smoke tests that verify:
-
-- Required project files exist
-- `index.html` references the external CSS/JS correctly
-- There are no duplicate HTML IDs
-- Meditation categories map to real meditation data
-- Intention recommendations map to valid categories
-- Core application selectors are present
-
-Run:
-
-```bash
-npm test
-```
-
-No third-party test dependency is required.
-
-## 🚀 Run locally
-
-Because Lunabelle is a static application, it can be opened directly in a browser.
-
-For a more production-like local environment, use any static server. For example:
+If Python is installed, run:
 
 ```bash
 python -m http.server 8000
@@ -127,42 +74,72 @@ Then open:
 http://localhost:8000
 ```
 
-## 🌐 Deploy to GitHub Pages
+## 🧪 Testing
 
-1. Create a GitHub repository.
-2. Upload the contents of this project.
-3. Push the files to the default branch.
-4. Open **Settings → Pages**.
-5. Select **Deploy from a branch**.
-6. Select the branch and `/ (root)` folder.
-7. Save and wait for GitHub Pages to publish the site.
+Run the project's smoke tests with:
 
-## 🛠️ Development principles
+```bash
+npm test
+```
 
-The refactor follows a few simple rules:
+Make sure the dependencies defined in `package.json` are installed if the test script requires them.
 
-- Keep markup in HTML.
-- Keep presentation in CSS.
-- Keep behavior/data in JavaScript.
-- Prefer reusable functions over duplicated logic.
-- Keep browser-only persistence behind the `DB` abstraction.
-- Keep accessibility attributes on interactive controls.
-- Respect `prefers-reduced-motion`.
-- Avoid unnecessary dependencies for a small static application.
-- Validate data mappings when adding new meditation categories or intentions.
+## 🔒 Privacy
 
-## 📌 Future improvements
+Lunabelle is designed with privacy in mind.
 
-Good next steps for a production-grade version:
+- No account or registration is required.
+- Personal information is stored locally in the browser.
+- The application uses LocalStorage with the `lunabelle.*` key namespace.
+- Journal entries and mood check-ins remain on the user's device.
+- Users can export or delete locally stored information.
+- No backend database is required for the core experience.
 
-1. Convert `app.js` into ES modules (`data/`, `storage/`, `audio/`, `ui/`).
-2. Replace remaining inline event handlers with delegated event listeners.
-3. Add automated browser tests with Playwright.
-4. Add a service worker/PWA manifest for offline installation.
-5. Add a formal accessibility audit.
-6. Add Content Security Policy headers when deployed with configurable hosting.
-7. Add stronger client-side data protection if the product ever handles sensitive information.
+**Important:** LocalStorage is not encrypted secure storage. Anyone with access to the same browser profile may be able to access locally stored information.
+
+## 🧩 Architecture
+
+Lunabelle uses a simple client-side architecture:
+
+- `index.html` provides the application structure.
+- `css/styles.css` controls the visual presentation and responsive layout.
+- `js/app.js` manages interactions, application logic, and local data.
+- `tests/smoke.test.js` contains basic application tests.
+
+The application is designed to remain lightweight and easy to maintain.
+
+## ♿ Accessibility
+
+Lunabelle aims to provide an accessible experience through:
+
+- Responsive layouts.
+- Keyboard navigation for supported controls.
+- Reduced-motion preferences.
+- Clear interface elements.
+- Readable content and visual hierarchy.
+
+## 🌱 Future Improvements
+
+Potential future enhancements include:
+
+- More guided meditation sessions.
+- Additional ambient soundscapes.
+- Expanded breathing exercises.
+- More journaling and reflection features.
+- Additional personalization options.
+- Improved progress visualization.
+
+## 💗 Development Principles
+
+Lunabelle is built around four principles:
+
+1. **Simplicity:** Keep the experience intuitive and easy to use.
+2. **Privacy:** Keep personal information under the user's control.
+3. **Accessibility:** Make the experience usable across different devices and needs.
+4. **Mindfulness:** Encourage small, intentional moments of self-care.
 
 ## 📄 License
 
-Add the license you want to use before publishing the repository. For example, MIT is a common choice for open-source projects.
+**MIT License**
+
+See the [LICENSE](LICENSE) file for the complete license terms.
